@@ -1,5 +1,6 @@
 import React from 'react'
-import { menuItemModel } from '../../../Interfaces'
+import { menuItemModel } from '../../../Interfaces';
+import {Link} from 'react-router-dom';
 
 interface Props {
     menuItem: menuItemModel;
@@ -12,11 +13,14 @@ function MenuItemCard(props : Props) {
     <div className="col-md-4 col-12 p-4">
         <div className="card" style={{boxShadow:"0 1px 7px 0 rgb(0 0 0 / 50%)"}}>
             <div className="card-body pt-2">
-                <img 
-                src={props.menuItem.image}
-                style={{borderRadius:"50%"}}
-                alt=""
-                className="w-100 mt-5 image-box"/>
+                <Link to={`/menuItemDetails/${props.menuItem.id}`}>
+                    <img 
+                    src={props.menuItem.image}
+                    style={{borderRadius:"50%"}}
+                    alt=""
+                    className="w-100 mt-5 image-box"/>
+                </Link>
+                
             </div>
             {props.menuItem.specialTag && props.menuItem.specialTag.length > 0 &&(
                 <i className="bi bi-star btn btn-success"
@@ -44,7 +48,10 @@ function MenuItemCard(props : Props) {
             }}>
             </i>
             <div className="text-center">
-                <p className="card-title m-0 text-success fs-3">{props.menuItem.name}</p>
+                <Link to={`/menuItemDetails/${props.menuItem.id}`}
+                style={{textDecoration: "none", color:"green"}}>
+                    <p className="card-title m-0 text-success fs-3">{props.menuItem.name}</p>
+                </Link>
                 <p className="badge bg-secondary" style={{textAlign: "center"}}>
                     {props.menuItem.category}
                 </p>
