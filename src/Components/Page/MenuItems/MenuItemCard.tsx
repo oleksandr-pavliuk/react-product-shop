@@ -1,14 +1,26 @@
 import React from 'react'
 import { menuItemModel } from '../../../Interfaces';
 import {Link} from 'react-router-dom';
+import { useUpdateShoppingCartMutation } from '../../../Apis/shoppingCartApi';
+import { useState } from 'react';
+import { MiniLoader } from '../Common';
 
 interface Props {
     menuItem: menuItemModel;
 }
 
 function MenuItemCard(props : Props) {
+    const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
+    const [updateShoppingCart] = useUpdateShoppingCartMutation();
   
-  
+    const handleAddToCart = async (menuItemId : number) => {
+        setIsAddingToCart(true);
+        const response = await updateShoppingCart({menuItemId: menuItemId, userId:'7ae4f3f8-6c4c-492b-b128-16f7a271b9b6', updateQuantityBy: 1});
+        console.log(response)
+        setIsAddingToCart(false);
+    }
+
+
     return (
     <div className="col-md-4 col-12 p-4">
         <div className="card" style={{boxShadow:"0 1px 7px 0 rgb(0 0 0 / 50%)"}}>
@@ -36,7 +48,16 @@ function MenuItemCard(props : Props) {
             &nbsp; {props.menuItem.specialTag}
             </i>
             )}
-            <i className="bi bi-cart-plus btn btn-outline-danger"
+
+            {isAddingToCart ? (
+                <div style={{position: "absolute",
+                top: "15px",
+                right: "15px"}}>
+                    <MiniLoader/>
+                </div>
+            ) : (
+            <i onClick = {() => {handleAddToCart(props.menuItem.id)}} 
+            className="bi bi-cart-plus btn btn-outline-danger"
             style={{
                 position: "absolute",
                 top: "15px",
@@ -46,7 +67,9 @@ function MenuItemCard(props : Props) {
                 outline:"none !important",
                 cursor:"pointer"
             }}>
-            </i>
+            </i>)
+            }
+            
             <div className="text-center">
                 <Link to={`/menuItemDetails/${props.menuItem.id}`}
                 style={{textDecoration: "none", color:"green"}}>
