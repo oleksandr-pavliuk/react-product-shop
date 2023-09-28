@@ -45,7 +45,7 @@ function MenuItemDetails() {
         </div>
         <div className="col-5">
             <img
-            src={props.menuItem.image}
+            src=""
             width="100%"
             style={{borderRadius: "50%"}}
             alt="No content"

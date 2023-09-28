@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { menuItemReducer } from "./menuItemSlice";
-
+import { menuItemApi } from "../../Apis";
 const store = configureStore({
     reducer: {
-        menuItemStore: menuItemReducer
-    }
+        menuItemStore: menuItemReducer,
+        [menuItemApi.reducerPath]: menuItemApi.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(menuItemApi.middleware)
 });
 
 export type RootStore = ReturnType<typeof store.getState>;
