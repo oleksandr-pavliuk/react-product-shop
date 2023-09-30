@@ -6,6 +6,7 @@ import { useGetMenuItemsQuery } from '../../../Apis/menuItemApi';
 import {useDispatch} from "react-redux";
 import { setMenuItem } from '../../../Storage/Redux/menuItemSlice';
 import { useUpdateShoppingCartMutation } from '../../../Apis/shoppingCartApi';
+import { MainLoader } from '../Common';
 
 
 function MenuItemList() {
@@ -19,7 +20,7 @@ function MenuItemList() {
     }, [isLoading]);
 
     if(isLoading){
-      return (<div>Loading . . .</div>);
+      return (<MainLoader/>);
     }
 
   return (

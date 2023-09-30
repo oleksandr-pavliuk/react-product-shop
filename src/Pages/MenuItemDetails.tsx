@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetMenuItemsByIdQuery } from '../Apis/menuItemApi';
 import {useState} from 'react';
 import { useUpdateShoppingCartMutation } from '../Apis/shoppingCartApi';
+import { MainLoader, MiniLoader } from '../Components/Page/Common';
 
 
 function MenuItemDetails() {
@@ -56,10 +57,16 @@ function MenuItemDetails() {
                 </span>
                 <div className="row pt-4">
                     <div className="col-5">
+                        {isAddingToCart ? (
+                        <button disabled className="btn btn-success form-control">
+                            <MiniLoader/>
+                        </button>
+                        ) : (
                         <button onClick = {() => handleAddToCart(data.result?.id)}
                          className="btn btn-success form-control">
                             Add to Cart
-                        </button>
+                        </button>)}
+                        
                     </div>
                     <div className="col-5">
                         <button className="btn btn-secondary form-control"
@@ -81,7 +88,7 @@ function MenuItemDetails() {
         ) : (
             <div className="d-flex justify-content-center"
             style={{width: "100%"}}>
-                <div>Loading . . . </div>
+                <MainLoader/>
             </div>
         )}
         </div>
